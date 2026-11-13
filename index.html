@@ -1,0 +1,718 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>Tools Riset Shopee Affiliate Pro — Temukan Produk Paling Cuan dalam Hitungan Detik</title>
+    <meta name="description" content="Chrome Extension untuk riset produk & komisi Shopee Affiliate, lengkap dengan Skor Peluang AI. Mulai Rp10.000, lisensi terkirim 1–5 menit setelah pembayaran." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
+    <style>
+      button, [role="button"], select, summary, a.btn, input:not([type="checkbox"], [type="radio"]) { min-height: 2.25rem; }
+
+      :root {
+        --bg: #fff8f4;
+        --bg-soft: #fff1e8;
+        --surface: #ffffff;
+        --surface-2: #fff6f0;
+        --ink: #221610;
+        --ink-2: #5d463a;
+        --ink-3: #8a6f60;
+        --line: #f3ddd0;
+        --brand: #ee4d2d;
+        --brand-dark: #d63a1d;
+        --brand-soft: #ffe9e1;
+        --gold: #f6a609;
+        --green: #0e9f6e;
+        --green-soft: #e2f6ec;
+        --shadow: 0 18px 44px -18px rgba(190, 62, 25, .28);
+        --radius: 18px;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #17100d;
+          --bg-soft: #201511;
+          --surface: #241813;
+          --surface-2: #2b1d16;
+          --ink: #fdf3ec;
+          --ink-2: #d9beb0;
+          --ink-3: #a98a79;
+          --line: #3d2a20;
+          --brand: #ff6a43;
+          --brand-dark: #ff815f;
+          --brand-soft: #3a211a;
+          --gold: #ffb63d;
+          --green: #3ecf8e;
+          --green-soft: #14352a;
+          --shadow: 0 18px 44px -18px rgba(0, 0, 0, .6);
+        }
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+        background: var(--bg);
+        color: var(--ink);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+      h1, h2, h3 { font-family: "Sora", "Plus Jakarta Sans", sans-serif; line-height: 1.18; margin: 0; letter-spacing: -.01em; }
+      p { margin: 0; }
+      a { color: var(--brand); }
+      img { max-width: 100%; }
+      .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+      section { padding: 64px 0; }
+      section.tight { padding: 40px 0; }
+
+      .btn {
+        display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+        font-weight: 700; font-size: 1rem; text-decoration: none; cursor: pointer;
+        padding: 12px 26px; border-radius: 999px; border: 0; transition: transform .15s ease, background .15s ease;
+      }
+      .btn:active { transform: scale(.98); }
+      .btn-primary { background: var(--brand); color: #fff; box-shadow: 0 10px 24px -8px rgba(238, 77, 45, .55); }
+      .btn-primary:hover { background: var(--brand-dark); }
+      .btn-ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--line); }
+      .btn-ghost:hover { border-color: var(--brand); color: var(--brand); }
+      .btn-block { width: 100%; }
+
+      /* ---------- HERO ---------- */
+      .hero { padding: 48px 0 64px; background: linear-gradient(180deg, var(--bg-soft), var(--bg)); overflow: hidden; }
+      .hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; align-items: center; }
+      .pill {
+        display: inline-flex; align-items: center; gap: 8px; font-size: .82rem; font-weight: 700;
+        background: var(--brand-soft); color: var(--brand); padding: 7px 14px; border-radius: 999px; margin-bottom: 20px;
+      }
+      .pill .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--brand); }
+      .hero h1 { font-size: clamp(2rem, 4.6vw, 3.3rem); font-weight: 800; }
+      .hero h1 .hl { color: var(--brand); }
+      .hero .sub { font-size: 1.13rem; color: var(--ink-2); margin: 20px 0 28px; max-width: 34rem; }
+      .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+      .hero-cta .btn { padding: 14px 30px; font-size: 1.05rem; }
+      .trust-row { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 26px; font-size: .9rem; color: var(--ink-2); font-weight: 600; }
+      .trust-row span { display: inline-flex; align-items: center; gap: 7px; }
+      .trust-row svg { flex: none; }
+
+      /* Browser mockup */
+      .mock-shell { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; }
+      .mock-bar { display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-bottom: 1px solid var(--line); background: var(--surface-2); }
+      .mock-bar i { width: 11px; height: 11px; border-radius: 50%; display: block; }
+      .mock-url { flex: 1; margin-left: 8px; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; font-size: .78rem; color: var(--ink-3); padding: 5px 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .mock-body { display: grid; grid-template-columns: 1fr 218px; min-height: 340px; }
+      .mock-shop { padding: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-content: start; }
+      .p-card { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--surface); }
+      .p-thumb { height: 74px; display: flex; align-items: center; justify-content: center; }
+      .p-info { padding: 9px 11px 11px; }
+      .p-name { font-size: .74rem; font-weight: 600; line-height: 1.35; }
+      .p-price { font-size: .82rem; font-weight: 800; color: var(--brand); margin-top: 3px; }
+      .p-sold { font-size: .68rem; color: var(--ink-3); }
+      .mock-panel { border-left: 1px solid var(--line); background: var(--surface-2); padding: 16px 14px; }
+      .mock-panel .mp-head { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: .8rem; margin-bottom: 14px; }
+      .mp-logo { width: 26px; height: 26px; border-radius: 8px; background: var(--brand); color: #fff; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 800; }
+      .mp-score { text-align: center; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 8px; margin-bottom: 12px; }
+      .mp-score .num { font-family: "Sora", sans-serif; font-size: 2rem; font-weight: 800; color: var(--green); line-height: 1; }
+      .mp-score .lbl { font-size: .7rem; font-weight: 700; color: var(--ink-2); margin-top: 5px; }
+      .mp-ring { width: 74px; height: 74px; margin: 0 auto 8px; }
+      .mp-row { display: flex; justify-content: space-between; font-size: .76rem; padding: 7px 2px; border-bottom: 1px dashed var(--line); }
+      .mp-row:last-child { border-bottom: 0; }
+      .mp-row b { font-weight: 800; }
+      .mp-verdict { margin-top: 12px; background: var(--green-soft); color: var(--green); font-size: .74rem; font-weight: 800; text-align: center; border-radius: 10px; padding: 8px 6px; }
+      .mock-caption { font-size: .8rem; color: var(--ink-3); text-align: center; margin-top: 12px; }
+
+      /* ---------- SECTIONS ---------- */
+      .sec-head { max-width: 640px; margin-bottom: 36px; }
+      .sec-head.center { margin-left: auto; margin-right: auto; text-align: center; }
+      .sec-head h2 { font-size: clamp(1.55rem, 3.2vw, 2.2rem); font-weight: 800; }
+      .sec-head p { color: var(--ink-2); margin-top: 12px; font-size: 1.02rem; }
+
+      .pain-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+      .pain-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 24px; }
+      .pain-card .ic { width: 46px; height: 46px; border-radius: 13px; background: var(--brand-soft); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+      .pain-card h3 { font-size: 1.05rem; margin-bottom: 8px; }
+      .pain-card p { color: var(--ink-2); font-size: .95rem; }
+
+      .feat-list { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+      .feat { display: flex; gap: 18px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 24px; }
+      .feat .ic { flex: none; width: 52px; height: 52px; border-radius: 14px; background: var(--brand); color: #fff; display: flex; align-items: center; justify-content: center; }
+      .feat h3 { font-size: 1.08rem; margin-bottom: 6px; }
+      .feat p { color: var(--ink-2); font-size: .95rem; }
+      .feat.wide { grid-column: 1 / -1; }
+
+      .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; counter-reset: step; }
+      .step { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px 24px; position: relative; }
+      .step .n { font-family: "Sora", sans-serif; font-size: 2.4rem; font-weight: 800; color: var(--brand-soft); line-height: 1; margin-bottom: 14px; }
+      @media (prefers-color-scheme: dark) { .step .n { color: #54382b; } }
+      .step h3 { font-size: 1.05rem; margin-bottom: 8px; }
+      .step p { color: var(--ink-2); font-size: .95rem; }
+
+      /* ---------- TESTIMONI BERJALAN ---------- */
+      .testi-sec { overflow: hidden; background: var(--surface); border-top: 1px solid var(--line); }
+      .testi-kicker { display: inline-block; font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--brand); background: var(--brand-soft); padding: 6px 12px; border-radius: 999px; margin-bottom: 14px; }
+      .marquee { position: relative; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); touch-action: pan-y; cursor: grab; }
+      .marquee:active { cursor: grabbing; }
+      .marquee-track { display: flex; gap: 16px; width: max-content; padding: 6px 8px 14px; animation: testi-scroll 84s linear infinite; will-change: transform; }
+      .marquee:hover .marquee-track, .marquee:focus-within .marquee-track, .marquee.is-paused .marquee-track { animation-play-state: paused; }
+      @keyframes testi-scroll { to { transform: translateX(-50%); } }
+      .testi-card { flex: 0 0 320px; max-width: 320px; background: var(--bg); border: 1px solid var(--line); border-radius: 18px; padding: 22px 20px; display: flex; flex-direction: column; gap: 12px; }
+      @media (prefers-color-scheme: dark) { .testi-card { background: var(--surface-2); } }
+      .testi-stars { display: flex; gap: 2px; color: var(--gold); line-height: 1; }
+      .testi-quote { font-size: .96rem; line-height: 1.65; color: var(--ink); flex: 1; }
+      .testi-quote::before { content: "“"; color: var(--brand); font-weight: 800; }
+      .testi-quote::after { content: "”"; color: var(--brand); font-weight: 800; }
+      .testi-person { display: flex; align-items: center; gap: 11px; border-top: 1px dashed var(--line); padding-top: 14px; }
+      .testi-avatar { flex: none; width: 42px; height: 42px; border-radius: 50%; background: var(--brand); color: #fff; display: flex; align-items: center; justify-content: center; font-family: "Sora", sans-serif; font-weight: 800; font-size: .95rem; }
+      .testi-person b { display: block; font-size: .9rem; line-height: 1.3; }
+      .testi-person span { display: block; font-size: .78rem; color: var(--ink-3); font-weight: 600; line-height: 1.35; }
+      .testi-person .testi-verified { display: inline-flex; align-items: center; gap: 4px; color: var(--green); font-weight: 700; }
+      .marquee-hint { text-align: center; font-size: .82rem; color: var(--ink-3); font-weight: 600; margin-top: 8px; padding: 0 20px; }
+      @media (max-width: 480px) { .testi-card { flex-basis: 282px; max-width: 282px; } .marquee-track { animation-duration: 68s; } }
+      @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } .marquee { overflow-x: auto; } }
+
+      /* ---------- PRICING ---------- */
+      .pricing-sec { background: var(--bg-soft); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+      .price-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; align-items: stretch; }
+      .price-card { background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius); padding: 26px 22px; display: flex; flex-direction: column; position: relative; }
+      .price-card.best { border-color: var(--brand); box-shadow: var(--shadow); }
+      .price-badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: var(--brand); color: #fff; font-size: .72rem; font-weight: 800; letter-spacing: .04em; padding: 5px 14px; border-radius: 999px; white-space: nowrap; }
+      .price-card .plan { font-weight: 700; color: var(--ink-2); font-size: .92rem; }
+      .price-card .amount { font-family: "Sora", sans-serif; font-size: 1.72rem; font-weight: 800; margin: 8px 0 2px; }
+      .price-card .per { font-size: .85rem; color: var(--ink-3); }
+      .price-card .perday { font-size: .82rem; color: var(--green); font-weight: 700; margin-top: 6px; min-height: 1.3em; }
+      .price-card ul { list-style: none; margin: 18px 0 22px; padding: 0; font-size: .9rem; color: var(--ink-2); display: grid; gap: 9px; }
+      .price-card ul li { display: flex; gap: 8px; align-items: flex-start; }
+      .price-card ul svg { flex: none; margin-top: 3px; }
+      .price-card .btn { margin-top: auto; }
+      .price-note { text-align: center; color: var(--ink-2); font-size: .92rem; margin-top: 26px; }
+
+      /* ---------- FAQ ---------- */
+      .faq { max-width: 760px; margin: 0 auto; display: grid; gap: 12px; }
+      details { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
+      summary { cursor: pointer; font-weight: 700; padding: 16px 20px; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 3.25rem; }
+      summary::-webkit-details-marker { display: none; }
+      summary .chev { flex: none; transition: transform .2s ease; color: var(--brand); }
+      details[open ] summary .chev { transform: rotate(180deg); }
+      details .faq-body { padding: 0 20px 18px; color: var(--ink-2); font-size: .96rem; }
+
+      /* ---------- FINAL CTA / FOOTER ---------- */
+      .final { background: var(--brand); color: #fff; border-radius: 26px; padding: 48px 32px; text-align: center; }
+      .final h2 { font-size: clamp(1.6rem, 3.4vw, 2.3rem); font-weight: 800; }
+      .final p { opacity: .92; margin: 14px auto 28px; max-width: 34rem; }
+      .final .btn { background: #fff; color: var(--brand-dark); box-shadow: 0 12px 26px -10px rgba(0,0,0,.35); }
+      .final .btn:hover { background: #fff3ee; }
+      footer { padding: 36px 0 110px; color: var(--ink-3); font-size: .88rem; }
+      footer .foot-flex { display: flex; flex-wrap: wrap; gap: 10px 28px; justify-content: space-between; align-items: center; }
+      footer a { color: var(--ink-2); font-weight: 600; }
+
+      /* Sticky mobile CTA */
+      .sticky-cta {
+        position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 50;
+        background: var(--surface); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 14px 34px -10px rgba(60, 25, 10, .35);
+        display: none; align-items: center; gap: 14px; padding: 10px 12px 10px 18px;
+      }
+      .sticky-cta .sc-price { line-height: 1.25; }
+      .sticky-cta .sc-price b { font-family: "Sora", sans-serif; font-size: 1.05rem; }
+      .sticky-cta .sc-price small { display: block; color: var(--ink-3); font-size: .72rem; font-weight: 600; }
+      .sticky-cta .btn { flex: 1; padding: 12px 18px; }
+
+      @media (max-width: 900px) {
+        .hero-grid { grid-template-columns: 1fr; gap: 36px; }
+        .price-grid { grid-template-columns: 1fr 1fr; }
+        .pain-grid, .steps { grid-template-columns: 1fr; }
+        .feat-list { grid-template-columns: 1fr; }
+        .sticky-cta { display: flex; }
+        section { padding: 48px 0; }
+      }
+      @media (max-width: 480px) {
+        .price-grid { grid-template-columns: 1fr; }
+        .mock-body { grid-template-columns: 1fr; }
+        .mock-panel { border-left: 0; border-top: 1px solid var(--line); }
+        .hero-cta { flex-direction: column; }
+        .hero-cta .btn { width: 100%; padding: 14px 18px; font-size: 1rem; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        * { transition: none !important; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- ================= HERO ================= -->
+    <header class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="pill"><span class="dot"></span> Chrome Extension untuk Shopee Affiliate</span>
+          <h1>Berhenti Tebak-Tebakan. Temukan Produk Shopee yang <span class="hl">Paling Cuan</span> dalam Hitungan Detik.</h1>
+          <p class="sub">Tools Riset Shopee Affiliate Pro menampilkan komisi dan Skor Peluang AI untuk setiap produk — langsung di halaman Shopee yang sedang kamu buka. Tidak perlu lagi riset manual satu per satu.</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="https://tokodigitalindonesia.my.id/product/prod-1/tools-riset-shopee-affiliate-pro" target="_blank" rel="noopener">Beli Sekarang — Mulai Rp10.000</a>
+            <a class="btn btn-ghost" href="#harga">Lihat Paket Harga</a>
+          </div>
+          <div class="trust-row">
+            <span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0e9f6e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Lisensi terkirim 1–5 menit</span>
+            <span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0e9f6e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Tanpa langganan ribet</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="mock-shell" aria-hidden="true">
+            <div class="mock-bar">
+              <i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i>
+              <span class="mock-url">shopee.co.id/search?keyword=skincare</span>
+            </div>
+            <div class="mock-body">
+              <div class="mock-shop">
+                <div class="p-card">
+                  <div class="p-thumb" style="background:#ffe3d3">
+                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#ee4d2d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h15l-1.5 9h-12z"/><path d="M6 7 5 3H2"/><circle cx="9" cy="20" r="1.6"/><circle cx="17" cy="20" r="1.6"/></svg>
+                  </div>
+                  <div class="p-info">
+                    <div class="p-name">Serum Wajah Glowing 20ml — Best Seller</div>
+                    <div class="p-price">Rp45.900</div>
+                    <div class="p-sold">Terjual 10rb+ / bulan</div>
+                  </div>
+                </div>
+                <div class="p-card">
+                  <div class="p-thumb" style="background:#e3f2ff">
+                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#2d7dee" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="12" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                  </div>
+                  <div class="p-info">
+                    <div class="p-name">Tas Selempang Wanita Kekinian</div>
+                    <div class="p-price">Rp62.000</div>
+                    <div class="p-sold">Terjual 4,2rb / bulan</div>
+                  </div>
+                </div>
+                <div class="p-card">
+                  <div class="p-thumb" style="background:#e6f7ee">
+                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#0e9f6e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="4"/></svg>
+                  </div>
+                  <div class="p-info">
+                    <div class="p-name">Kipas Angin Mini USB Portable</div>
+                    <div class="p-price">Rp38.500</div>
+                    <div class="p-sold">Terjual 7,8rb / bulan</div>
+                  </div>
+                </div>
+                <div class="p-card">
+                  <div class="p-thumb" style="background:#f3e8ff">
+                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#8b3dee" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg>
+                  </div>
+                  <div class="p-info">
+                    <div class="p-name">Buku &amp; Planner Produktivitas 2027</div>
+                    <div class="p-price">Rp54.000</div>
+                    <div class="p-sold">Terjual 1,1rb / bulan</div>
+                  </div>
+                </div>
+              </div>
+              <aside class="mock-panel">
+                <div class="mp-head"><span class="mp-logo">R</span> Riset Affiliate Pro</div>
+                <div class="mp-score">
+                  <svg class="mp-ring" viewBox="0 0 80 80">
+                    <circle cx="40" cy="40" r="34" fill="none" stroke="var(--line)" stroke-width="8"/>
+                    <circle cx="40" cy="40" r="34" fill="none" stroke="#0e9f6e" stroke-width="8" stroke-linecap="round" stroke-dasharray="213.6" stroke-dashoffset="30" transform="rotate(-90 40 40)"/>
+                    <text x="40" y="47" text-anchor="middle" font-family="Sora, sans-serif" font-size="21" font-weight="800" fill="var(--ink)">87</text>
+                  </svg>
+                  <div class="lbl">SKOR PELUANG AI</div>
+                </div>
+                <div class="mp-row"><span>Komisi produk</span><b>12%</b></div>
+                <div class="mp-row"><span>Estimasi komisi</span><b>Rp5.508</b></div>
+                <div class="mp-row"><span>Penjualan / bulan</span><b>10rb+</b></div>
+                <div class="mp-row"><span>Rating produk</span><b>4.9 / 5</b></div>
+                <div class="mp-verdict">LAYAK DIPROMOSIKAN</div>
+              </aside>
+            </div>
+          </div>
+          <p class="mock-caption">Ilustrasi tampilan ekstensi saat membuka halaman produk di Shopee.</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- ================= MASALAH ================= -->
+    <section>
+      <div class="wrap">
+        <div class="sec-head">
+          <h2>Riset produk manual itu yang bikin affiliate jalan di tempat</h2>
+          <p>Mayoritas affiliate menghabiskan waktu paling banyak bukan untuk membuat konten — tapi untuk memilih produk. Dan seringnya, pilihan itu cuma berdasarkan feeling.</p>
+        </div>
+        <div class="pain-grid">
+          <div class="pain-card">
+            <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ee4d2d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+            <h3>Berjam-jam scroll, hasilnya nol</h3>
+            <p>Membuka ratusan produk satu per satu, mencatat harga dan penjualan di spreadsheet — waktu yang seharusnya dipakai membuat konten habis untuk riset.</p>
+          </div>
+          <div class="pain-card">
+            <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ee4d2d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/><path d="M8 11h6M11 8v6"/></svg></div>
+            <h3>Komisi kecil baru ketahuan belakangan</h3>
+            <p>Produk sudah dipromosikan dan konten sudah dibuat, ternyata komisinya tidak sebanding dengan usaha. Kerugian waktu yang tidak bisa diulang.</p>
+          </div>
+          <div class="pain-card">
+            <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ee4d2d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></div>
+            <h3>Kalah cepat dari kompetitor</h3>
+            <p>Produk yang sedang naik daun ditemukan kompetitor lebih dulu. Saat kamu baru mulai riset, mereka sudah panen komisi dari tren yang sama.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FITUR ================= -->
+    <section class="tight" style="padding-top:0">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2>Satu ekstensi, semua data riset di depan mata</h2>
+          <p>Install sekali di Google Chrome, lalu data penting setiap produk Shopee tampil otomatis saat kamu browsing — tanpa pindah tab, tanpa spreadsheet.</p>
+        </div>
+        <div class="feat-list">
+          <div class="feat">
+            <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></div>
+            <div>
+              <h3>Riset Produk Langsung di Shopee</h3>
+              <p>Data penjualan dan performa produk tampil saat kamu membuka halaman pencarian atau produk di Shopee. Bandingkan banyak produk dalam sekali lihat, bukan satu per satu.</p>
+            </div>
+          </div>
+          <div class="feat">
+            <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.4"/><path d="M6 12h.01M18 12h.01"/></svg></div>
+            <div>
+              <h3>Cek Komisi Setiap Produk</h3>
+              <p>Lihat besaran komisi sebelum memutuskan promosi. Fokuskan kontenmu hanya pada produk yang komisinya benar-benar layak diperjuangkan.</p>
+            </div>
+          </div>
+          <div class="feat wide">
+            <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a5 5 0 0 1 5 5c0 2-1 3.5-2 4.5V15a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-2.5C8 11.5 7 10 7 8a5 5 0 0 1 5-5z"/><path d="M9 20h6M10 23h4" transform="translate(0 -2)"/></svg></div>
+            <div>
+              <h3>Skor Peluang AI</h3>
+              <p>Setiap produk dinilai dengan satu angka yang mudah dibaca: Skor Peluang AI. Skor merangkum potensi produk — penjualan, komisi, dan daya saing — jadi kamu bisa memutuskan dalam hitungan detik apakah produk itu layak dipromosikan, tanpa menimbang semua data mentah satu per satu.</p>
+            </div>
+          </div>
+          <div class="feat">
+            <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4.5 13.5H11L9.5 22 19 10h-6.5z"/></svg></div>
+            <div>
+              <h3>Keputusan dalam Hitungan Detik</h3>
+              <p>Riset yang tadinya memakan waktu berjam-jam selesai dalam sekali browsing. Lebih banyak waktu untuk membuat konten — aktivitas yang benar-benar menghasilkan komisi.</p>
+            </div>
+          </div>
+          <div class="feat">
+            <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+            <div>
+              <h3>Jalan di Chrome, Tanpa Ribet</h3>
+              <p>Berupa Chrome Extension untuk komputer dan laptop. Tidak ada software berat yang perlu diinstall — cukup tambahkan ke Chrome dan langsung pakai dengan lisensimu.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CARA KERJA ================= -->
+    <section>
+      <div class="wrap">
+        <div class="sec-head center">
+          <h2>Mulai dalam 3 langkah</h2>
+          <p>Dari pembayaran sampai riset pertama, semuanya serba cepat.</p>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <div class="n">01</div>
+            <h3>Pilih paket &amp; bayar</h3>
+            <p>Pilih durasi lisensi yang sesuai — mulai 1 minggu untuk mencoba. Selesaikan pembayaran di TokoKita Official dan buat akun saat checkout.</p>
+          </div>
+          <div class="step">
+            <div class="n">02</div>
+            <h3>Terima lisensi 1–5 menit</h3>
+            <p>Lisensi dikirim otomatis 1–5 menit setelah pembayaran berhasil (maksimal 24 jam). Install ekstensinya di Google Chrome dan aktifkan dengan lisensimu.</p>
+          </div>
+          <div class="step">
+            <div class="n">03</div>
+            <h3>Riset langsung di Shopee</h3>
+            <p>Buka Shopee seperti biasa. Komisi dan Skor Peluang AI setiap produk langsung tampil — pilih yang terbaik, buat kontennya, panen komisinya.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TESTIMONI BERJALAN ================= -->
+    <section class="testi-sec" id="testimoni" aria-label="Testimoni pengguna">
+      <div class="wrap">
+        <div class="sec-head center" style="margin-bottom:26px">
+          <span class="testi-kicker">Testimoni Pengguna</span>
+          <h2>Riset Lebih Mudah, Pilihan Produk Lebih Yakin</h2>
+          <p>Pengalaman pembeli yang sudah memakai tools ini: riset produk terasa lebih ringan, komisi langsung kelihatan, dan Skor Peluang AI membantu memilih produk dengan jauh lebih yakin.</p>
+        </div>
+      </div>
+
+      <div class="marquee" id="testiMarquee" tabindex="0" aria-label="Daftar testimoni berjalan. Arahkan kursor atau sentuh untuk berhenti sejenak.">
+        <div class="marquee-track" id="testiTrack">
+          <!-- Set 1: 12 pembeli -->
+          <article class="testi-card">
+            <div class="testi-stars" aria-label="Bintang 5 dari 5"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg></div>
+            <p class="testi-quote">Awalnya saya kira riset produk itu memang harus lama. Ternyata setelah pakai tools ini, sambil scroll Shopee saja data produknya sudah muncul semua. Jauh lebih gampang dari cara manual saya dulu.</p>
+            <div class="testi-person"><span class="testi-avatar" aria-hidden="true">T</span><div><b>Taufan</b><span class="testi-verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Pembeli terverifikasi</span></div></div>
+          </article>
+          <article class="testi-card">
+            <div class="testi-stars" aria-label="Bintang 5 dari 5"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg></div>
+            <p class="testi-quote">Komisinya langsung kelihatan di setiap produk — itu yang paling kerasa bedanya. Saya jadi berhenti menebak dan bisa langsung fokus ke produk yang komisinya memang layak dipromosikan.</p>
+            <div class="testi-person"><span class="testi-avatar" aria-hidden="true">D</span><div><b>Dwi</b><span class="testi-verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Pembeli terverifikasi</span></div></div>
+          </article>
+          <article class="testi-card">
+            <div class="testi-stars" aria-label="Bintang 5 dari 5"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg></div>
+            <p class="testi-quote">Dulu riset produk bisa makan waktu berjam-jam, sekarang sambil buka Shopee datanya langsung muncul semua. Tinggal pilih yang Skor Peluang AI-nya tinggi, langsung gas bikin konten — jauh lebih cepat.</p>
+            <div class="testi-person"><span class="testi-avatar" aria-hidden="true">A</span><div><b>Andi</b><span class="testi-verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Pembeli terverifikasi</span></div></div>
+          </article>
+          <article class="testi-card">
+            <div class="testi-stars" aria-label="Bintang 5 dari 5"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg></div>
+            <p class="testi-quote">Sebagai pemula aku sempat bingung mulai dari mana. Tools ini bikin semuanya jelas — komisinya kelihatan, Skor Peluang AI-nya ada, jadi aku berani mulai promosi tanpa takut salah pilih produk.</p>
+            <div class="testi-person"><span class="testi-avatar" aria-hidden="true">S</span><div><b>Siti</b><span class="testi-verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Pembeli terverifikasi</span></div></div>
+          </article>
+          <article class="testi-card">
+            <div class="testi-stars" aria-label="Bintang 5 dari 5"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg></div>
+            <p class="testi-quote">Fitur cek komisinya juara. Nggak ada lagi cerita sudah capek-capek bikin konten, eh ternyata komisinya kecil. Sekarang aku saring dari awal dan fokus ke produk yang paling layak dipromosikan.</p>
+            <div class="testi-person"><span class="testi-avatar" aria-hidden="true">R</span><div><b>Rizky</b><span class="testi-verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Pembeli terverifikasi</span></div></div>
+          </article>
+          <article class="testi-card">
+            <div class="testi-stars" aria-label="Bintang 5 dari 5"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg></div>
+            <p class="testi-quote">Aku suka karena risetnya nggak ribet sama sekali. Buka halaman Shopee, semua info pentingnya sudah tampil. Skor Peluang AI membantu banget buat memutuskan cepat tanpa overthinking.</p>
+            <div class="testi-person"><span class="testi-avatar" aria-hidden="true">L</span><div><b>Larasati</b><span class="testi-verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Pembeli terverifikasi</span></div></div>
+          </article>
+          <article class="testi-card">
+            <div class="testi-stars" aria-label="Bintang 5 dari 5"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg></div>
+            <p class="testi-quote">Sudah coba cara manual pakai spreadsheet — capek dan lambat. Pakai ekstensi ini jauh lebih praktis: data produk dan komisinya jadi satu pandangan. Riset selesai, tinggal eksekusi kontennya.</p>
+            <div class="testi-person"><span class="testi-avatar" aria-hidden="true">B</span><div><b>Budi</b><span class="testi-verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Pembeli terverifikasi</span></div></div>
+          </article>
+          <article class="testi-card">
+            <div class="testi-stars" aria-label="Bintang 5 dari 5"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg></div>
+            <p class="testi-quote">Yang paling membantu buatku itu Skor Peluang AI. Dulu milih produk cuma pakai feeling, sekarang ada angka yang memandu. Rasanya jauh lebih tenang dan yakin setiap mau promosi.</p>
+            <div class="testi-person"><span class="testi-avatar" aria-hidden="true">R</span><div><b>Rina</b><span class="testi-verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Pembeli terverifikasi</span></div></div>
+          </article>
+          <article class="testi-card">
+            <div class="testi-stars" aria-label="Bintang 5 dari 5"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg></div>
+            <p class="testi-quote">Tools ini bikin aku lebih cepat menemukan produk yang potensial. Komisinya transparan dari awal, jadi waktu bikin konten nggak terbuang buat produk yang kurang menjanjikan.</p>
+            <div class="testi-person"><span class="testi-avatar" aria-hidden="true">D</span><div><b>Dimas</b><span class="testi-verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Pembeli terverifikasi</span></div></div>
+          </article>
+          <article class="testi-card">
+            <div class="testi-stars" aria-label="Bintang 5 dari 5"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg></div>
+            <p class="testi-quote">Tampilannya simpel dan langsung kepakai, nggak perlu belajar lama-lama. Buka Shopee, lihat skor peluang dan komisinya, beres. Cocok buat yang pengen riset cepat tapi tetap berdasarkan data.</p>
+            <div class="testi-person"><span class="testi-avatar" aria-hidden="true">M</span><div><b>Maya</b><span class="testi-verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Pembeli terverifikasi</span></div></div>
+          </article>
+          <article class="testi-card">
+            <div class="testi-stars" aria-label="Bintang 5 dari 5"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg></div>
+            <p class="testi-quote">Awalnya aku skeptis sama tools begini, tapi yang ini memang kepakai tiap hari. Riset produk jadi ringan, dan aku bisa membandingkan banyak produk sekaligus dalam sekali jalan.</p>
+            <div class="testi-person"><span class="testi-avatar" aria-hidden="true">J</span><div><b>Joko</b><span class="testi-verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Pembeli terverifikasi</span></div></div>
+          </article>
+          <article class="testi-card">
+            <div class="testi-stars" aria-label="Bintang 5 dari 5"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg></div>
+            <p class="testi-quote">Sejak pakai ini, cara aku memilih produk berubah total. Nggak nebak-nebak lagi — komisi jelas, Skor Peluang AI-nya jelas. Buat affiliate pemula sampai yang sudah jalan, ini ngebantu banget.</p>
+            <div class="testi-person"><span class="testi-avatar" aria-hidden="true">A</span><div><b>Aulia</b><span class="testi-verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Pembeli terverifikasi</span></div></div>
+          </article>
+
+          <!-- Set 2: duplikat persis untuk loop mulus -->
+          <article class="testi-card" aria-hidden="true">
+            <div class="testi-stars"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg></div>
+            <p class="testi-quote">Awalnya saya kira riset produk itu memang harus lama. Ternyata setelah pakai tools ini, sambil scroll Shopee saja data produknya sudah muncul semua. Jauh lebih gampang dari cara manual saya dulu.</p>
+            <div class="testi-person"><span class="testi-avatar" aria-hidden="true">T</span><div><b>Taufan</b><span class="testi-verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Pembeli terverifikasi</span></div></div>
+          </article>
+          <article class="testi-card" aria-hidden="true">
+            <div class="testi-stars"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg></div>
+            <p class="testi-quote">Komisinya langsung kelihatan di setiap produk — itu yang paling kerasa bedanya. Saya jadi berhenti menebak dan bisa langsung fokus ke produk yang komisinya memang layak dipromosikan.</p>
+            <div class="testi-person"><span class="testi-avatar" aria-hidden="true">D</span><div><b>Dwi</b><span class="testi-verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Pembeli terverifikasi</span></div></div>
+          </article>
+          <article class="testi-card" aria-hidden="true">
+            <div class="testi-stars"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg></div>
+            <p class="testi-quote">Dulu riset produk bisa makan waktu berjam-jam, sekarang sambil buka Shopee datanya langsung muncul semua. Tinggal pilih yang Skor Peluang AI-nya tinggi, langsung gas bikin konten — jauh lebih cepat.</p>
+            <div class="testi-person"><span class="testi-avatar" aria-hidden="true">A</span><div><b>Andi</b><span class="testi-verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Pembeli terverifikasi</span></div></div>
+          </article>
+          <article class="testi-card" aria-hidden="true">
+            <div class="testi-stars"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg></div>
+            <p class="testi-quote">Sebagai pemula aku sempat bingung mulai dari mana. Tools ini bikin semuanya jelas — komisinya kelihatan, Skor Peluang AI-nya ada, jadi aku berani mulai promosi tanpa takut salah pilih produk.</p>
+            <div class="testi-person"><span class="testi-avatar" aria-hidden="true">S</span><div><b>Siti</b><span class="testi-verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Pembeli terverifikasi</span></div></div>
+          </article>
+          <article class="testi-card" aria-hidden="true">
+            <div class="testi-stars"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg></div>
+            <p class="testi-quote">Fitur cek komisinya juara. Nggak ada lagi cerita sudah capek-capek bikin konten, eh ternyata komisinya kecil. Sekarang aku saring dari awal dan fokus ke produk yang paling layak dipromosikan.</p>
+            <div class="testi-person"><span class="testi-avatar" aria-hidden="true">R</span><div><b>Rizky</b><span class="testi-verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Pembeli terverifikasi</span></div></div>
+          </article>
+          <article class="testi-card" aria-hidden="true">
+            <div class="testi-stars"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg></div>
+            <p class="testi-quote">Aku suka karena risetnya nggak ribet sama sekali. Buka halaman Shopee, semua info pentingnya sudah tampil. Skor Peluang AI membantu banget buat memutuskan cepat tanpa overthinking.</p>
+            <div class="testi-person"><span class="testi-avatar" aria-hidden="true">L</span><div><b>Larasati</b><span class="testi-verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Pembeli terverifikasi</span></div></div>
+          </article>
+          <article class="testi-card" aria-hidden="true">
+            <div class="testi-stars"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg></div>
+            <p class="testi-quote">Sudah coba cara manual pakai spreadsheet — capek dan lambat. Pakai ekstensi ini jauh lebih praktis: data produk dan komisinya jadi satu pandangan. Riset selesai, tinggal eksekusi kontennya.</p>
+            <div class="testi-person"><span class="testi-avatar" aria-hidden="true">B</span><div><b>Budi</b><span class="testi-verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Pembeli terverifikasi</span></div></div>
+          </article>
+          <article class="testi-card" aria-hidden="true">
+            <div class="testi-stars"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg></div>
+            <p class="testi-quote">Yang paling membantu buatku itu Skor Peluang AI. Dulu milih produk cuma pakai feeling, sekarang ada angka yang memandu. Rasanya jauh lebih tenang dan yakin setiap mau promosi.</p>
+            <div class="testi-person"><span class="testi-avatar" aria-hidden="true">R</span><div><b>Rina</b><span class="testi-verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Pembeli terverifikasi</span></div></div>
+          </article>
+          <article class="testi-card" aria-hidden="true">
+            <div class="testi-stars"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg></div>
+            <p class="testi-quote">Tools ini bikin aku lebih cepat menemukan produk yang potensial. Komisinya transparan dari awal, jadi waktu bikin konten nggak terbuang buat produk yang kurang menjanjikan.</p>
+            <div class="testi-person"><span class="testi-avatar" aria-hidden="true">D</span><div><b>Dimas</b><span class="testi-verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Pembeli terverifikasi</span></div></div>
+          </article>
+          <article class="testi-card" aria-hidden="true">
+            <div class="testi-stars"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg></div>
+            <p class="testi-quote">Tampilannya simpel dan langsung kepakai, nggak perlu belajar lama-lama. Buka Shopee, lihat skor peluang dan komisinya, beres. Cocok buat yang pengen riset cepat tapi tetap berdasarkan data.</p>
+            <div class="testi-person"><span class="testi-avatar" aria-hidden="true">M</span><div><b>Maya</b><span class="testi-verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Pembeli terverifikasi</span></div></div>
+          </article>
+          <article class="testi-card" aria-hidden="true">
+            <div class="testi-stars"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg></div>
+            <p class="testi-quote">Awalnya aku skeptis sama tools begini, tapi yang ini memang kepakai tiap hari. Riset produk jadi ringan, dan aku bisa membandingkan banyak produk sekaligus dalam sekali jalan.</p>
+            <div class="testi-person"><span class="testi-avatar" aria-hidden="true">J</span><div><b>Joko</b><span class="testi-verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Pembeli terverifikasi</span></div></div>
+          </article>
+          <article class="testi-card" aria-hidden="true">
+            <div class="testi-stars"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg></div>
+            <p class="testi-quote">Sejak pakai ini, cara aku memilih produk berubah total. Nggak nebak-nebak lagi — komisi jelas, Skor Peluang AI-nya jelas. Buat affiliate pemula sampai yang sudah jalan, ini ngebantu banget.</p>
+            <div class="testi-person"><span class="testi-avatar" aria-hidden="true">A</span><div><b>Aulia</b><span class="testi-verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Pembeli terverifikasi</span></div></div>
+          </article>
+        
+        </div>
+      </div>
+      <p class="marquee-hint">Berjalan otomatis — sentuh atau arahkan kursor ke testimoni untuk berhenti sejenak dan membaca.</p>
+    </section>
+
+    <!-- ================= HARGA ================= -->
+    <section class="pricing-sec" id="harga">
+      <div class="wrap">
+        <div class="sec-head center">
+          <h2>Harga jujur, mulai dari Rp10.000</h2>
+          <p>Semua paket berisi ekstensi yang sama dengan fitur lengkap. Bedanya hanya durasi lisensi — pilih yang paling masuk akal untukmu.</p>
+        </div>
+        <div class="price-grid">
+          <div class="price-card">
+            <div class="plan">1 Minggu</div>
+            <div class="amount">Rp10.000</div>
+            <div class="per">untuk 7 hari akses</div>
+            <div class="perday">± Rp1.428 / hari</div>
+            <ul>
+              <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0e9f6e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Semua fitur Pro</li>
+              <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0e9f6e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Skor Peluang AI</li>
+              <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0e9f6e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Cocok untuk mencoba dulu</li>
+            </ul>
+            <a class="btn btn-ghost btn-block" href="https://tokodigitalindonesia.my.id/product/prod-1/tools-riset-shopee-affiliate-pro" target="_blank" rel="noopener">Pilih 1 Minggu</a>
+          </div>
+          <div class="price-card">
+            <div class="plan">1 Bulan</div>
+            <div class="amount">Rp30.000</div>
+            <div class="per">untuk 30 hari akses</div>
+            <div class="perday">± Rp1.000 / hari</div>
+            <ul>
+              <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0e9f6e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Semua fitur Pro</li>
+              <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0e9f6e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Skor Peluang AI</li>
+              <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0e9f6e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Untuk affiliate aktif bulanan</li>
+            </ul>
+            <a class="btn btn-ghost btn-block" href="https://tokodigitalindonesia.my.id/product/prod-1/tools-riset-shopee-affiliate-pro" target="_blank" rel="noopener">Pilih 1 Bulan</a>
+          </div>
+          <div class="price-card best">
+            <span class="price-badge">PALING HEMAT</span>
+            <div class="plan">1 Tahun</div>
+            <div class="amount">Rp149.000</div>
+            <div class="per">untuk 365 hari akses</div>
+            <div class="perday">± Rp408 / hari — hemat 59% vs bulanan</div>
+            <ul>
+              <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0e9f6e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Semua fitur Pro</li>
+              <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0e9f6e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Skor Peluang AI</li>
+              <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0e9f6e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Setara 5 bulan harga bulanan, pakai 12 bulan</li>
+            </ul>
+            <a class="btn btn-primary btn-block" href="https://tokodigitalindonesia.my.id/product/prod-1/tools-riset-shopee-affiliate-pro" target="_blank" rel="noopener">Pilih 1 Tahun</a>
+          </div>
+          <div class="price-card">
+            <div class="plan">Lifetime</div>
+            <div class="amount">Rp249.000</div>
+            <div class="per">sekali bayar, selamanya</div>
+            <div class="perday">Tanpa perpanjang lagi</div>
+            <ul>
+              <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0e9f6e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Semua fitur Pro</li>
+              <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0e9f6e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Skor Peluang AI</li>
+              <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0e9f6e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Bayar sekali, tidak ada tagihan berikutnya</li>
+            </ul>
+            <a class="btn btn-ghost btn-block" href="https://tokodigitalindonesia.my.id/product/prod-1/tools-riset-shopee-affiliate-pro" target="_blank" rel="noopener">Pilih Lifetime</a>
+          </div>
+        </div>
+        <p class="price-note">Semua pembelian diproses aman melalui TokoKita Official, dan lisensi terkirim otomatis 1–5 menit setelah pembayaran berhasil.</p>
+      </div>
+    </section>
+
+    <!-- ================= FAQ ================= -->
+    <section>
+      <div class="wrap">
+        <div class="sec-head center">
+          <h2>Pertanyaan yang sering ditanyakan</h2>
+        </div>
+        <div class="faq">
+          <details>
+            <summary>Produk ini bentuknya apa? <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary>
+            <div class="faq-body">Sebuah Chrome Extension — ekstensi untuk browser Google Chrome di komputer/laptop. Setelah membeli, kamu menerima lisensi untuk mengaktifkan ekstensinya, dan data riset produk Shopee akan tampil langsung saat kamu browsing Shopee.</div>
+          </details>
+          <details>
+            <summary>Berapa lama lisensi saya terima setelah bayar? <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary>
+            <div class="faq-body">Pengiriman bersifat instan: umumnya 1–5 menit setelah pembayaran berhasil, dengan batas maksimal 24 jam. Pastikan kamu menyelesaikan pendaftaran akun saat membeli, karena lisensi terikat ke akunmu.</div>
+          </details>
+          <details>
+            <summary>Apa itu Skor Peluang AI? <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary>
+            <div class="faq-body">Satu angka ringkasan untuk setiap produk yang merangkum potensinya — termasuk penjualan dan komisinya — supaya kamu bisa menilai dalam hitungan detik apakah produk tersebut layak dipromosikan, tanpa membaca semua data mentah satu per satu.</div>
+          </details>
+          <details>
+            <summary>Paket mana yang paling cocok untuk pemula? <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary>
+            <div class="faq-body">Mulai dari paket 1 Minggu (Rp10.000) untuk mencoba semua fitur. Kalau sudah yakin dan aktif promosi setiap bulan, paket 1 Tahun (Rp149.000) jauh lebih hemat — hanya sekitar Rp408 per hari. Semua paket mendapat fitur yang sama; yang berbeda hanya durasi lisensinya.</div>
+          </details>
+          <details>
+            <summary>Bagaimana cara membayarnya? <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary>
+            <div class="faq-body">Pembayaran diproses melalui halaman produk di TokoKita Official. Klik tombol beli di halaman ini, pilih durasi lisensi, lalu selesaikan pembayaran sesuai metode yang tersedia di halaman checkout toko.</div>
+          </details>
+          <details>
+            <summary>Apakah bisa refund? <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary>
+            <div class="faq-body">Sesuai ketentuan toko, produk digital yang sudah terkirim tidak dapat di-refund — kecuali apabila terjadi kesalahan dari pihak toko (misalnya lisensi tidak terkirim). Karena itu tersedia paket 1 Minggu Rp10.000 agar kamu bisa mencoba dulu dengan risiko sangat kecil.</div>
+          </details>
+          <details>
+            <summary>Apakah tools ini menjamin komisi saya naik? <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary>
+            <div class="faq-body">Tidak ada tools yang bisa menjamin hasil — komisi tetap bergantung pada konten dan konsistensimu. Tools ini membantumu mengambil keputusan produk berdasarkan data, bukan tebakan, dan memangkas waktu riset secara drastis. Keputusan akhir dan eksekusinya tetap di tanganmu.</div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FINAL CTA ================= -->
+    <section class="tight" style="padding-top:0">
+      <div class="wrap">
+        <div class="final">
+          <h2>Produk bagus tidak menunggu. Pesaingmu juga sedang riset sekarang.</h2>
+          <p>Mulai Rp10.000 untuk seminggu penuh akses semua fitur. Lisensi sampai di tanganmu dalam 1–5 menit setelah pembayaran.</p>
+          <a class="btn" href="https://tokodigitalindonesia.my.id/product/prod-1/tools-riset-shopee-affiliate-pro" target="_blank" rel="noopener">Ambil Lisensimu Sekarang</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="wrap foot-flex">
+        <span><strong>Tools Riset Shopee Affiliate Pro</strong> — dijual oleh <a href="https://tokodigitalindonesia.my.id/" target="_blank" rel="noopener">TokoKita Official</a></span>
+        <span>Produk ini adalah tools riset independen dan tidak berafiliasi dengan Shopee.</span>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        var marquee = document.getElementById('testiMarquee');
+        if (!marquee) return;
+        var resumeTimer = null;
+        function pause() { marquee.classList.add('is-paused'); if (resumeTimer) clearTimeout(resumeTimer); }
+        function resumeSoon() { resumeTimer = setTimeout(function () { marquee.classList.remove('is-paused'); }, 1200); }
+        marquee.addEventListener('touchstart', pause, { passive: true });
+        marquee.addEventListener('touchend', resumeSoon, { passive: true });
+        marquee.addEventListener('touchcancel', resumeSoon, { passive: true });
+        marquee.addEventListener('pointerdown', pause);
+        marquee.addEventListener('pointerup', resumeSoon);
+        marquee.addEventListener('pointercancel', resumeSoon);
+      })();
+    </script>
+
+    <!-- Sticky CTA (mobile) -->
+    <div class="sticky-cta">
+      <div class="sc-price"><small>Mulai dari</small><b>Rp10.000</b></div>
+      <a class="btn btn-primary" href="https://tokodigitalindonesia.my.id/product/prod-1/tools-riset-shopee-affiliate-pro" target="_blank" rel="noopener">Beli Sekarang</a>
+    </div>
+
+  </body>
+</html>
