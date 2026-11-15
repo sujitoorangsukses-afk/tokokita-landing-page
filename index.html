@@ -143,6 +143,25 @@
       .feat p { color: var(--ink-2); font-size: .95rem; }
       .feat.wide { grid-column: 1 / -1; }
 
+      /* ---------- BAHAN PROMOSI OTOMATIS ---------- */
+      .auto-panel { margin-top: 22px; background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%); border: 1.5px solid var(--brand); border-radius: 22px; padding: 32px 28px 28px; box-shadow: var(--shadow); position: relative; overflow: hidden; }
+      .auto-panel::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 4px; background: var(--brand); }
+      .auto-head { text-align: center; max-width: 680px; margin: 0 auto 26px; }
+      .auto-badge { display: inline-flex; align-items: center; gap: 7px; font-size: .76rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; background: var(--brand); color: #fff; padding: 6px 13px; border-radius: 999px; margin-bottom: 14px; }
+      .auto-head h3 { font-size: clamp(1.35rem, 2.8vw, 1.85rem); font-weight: 800; line-height: 1.22; }
+      .auto-head h3 .hl { color: var(--brand); }
+      .auto-head p { color: var(--ink-2); font-size: 1rem; margin-top: 12px; line-height: 1.65; }
+      .auto-head p strong { color: var(--ink); }
+      .auto-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+      .auto-card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 22px 20px; display: flex; gap: 16px; align-items: flex-start; }
+      .auto-card .a-ic { flex: none; width: 50px; height: 50px; border-radius: 13px; background: var(--brand-soft); color: var(--brand); display: flex; align-items: center; justify-content: center; }
+      .auto-card h4 { font-family: "Sora", sans-serif; font-size: 1.02rem; line-height: 1.3; margin: 0 0 6px; }
+      .auto-card p { color: var(--ink-2); font-size: .93rem; line-height: 1.6; margin: 0; }
+      .auto-tag { display: inline-flex; align-items: center; gap: 5px; margin-top: 11px; font-size: .74rem; font-weight: 800; letter-spacing: .02em; color: var(--green); background: var(--green-soft); padding: 5px 9px; border-radius: 999px; }
+      .auto-foot { margin-top: 20px; background: var(--brand-soft); border-radius: 12px; padding: 14px 18px; text-align: center; font-size: .94rem; color: var(--ink-2); line-height: 1.6; }
+      .auto-foot strong { color: var(--ink); }
+      @media (max-width: 700px) { .auto-grid { grid-template-columns: 1fr; } .auto-panel { padding: 26px 18px 20px; } }
+
       .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; counter-reset: step; }
       .step { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px 24px; position: relative; }
       .step .n { font-family: "Sora", sans-serif; font-size: 2.4rem; font-weight: 800; color: var(--brand-soft); line-height: 1; margin-bottom: 14px; }
@@ -432,6 +451,50 @@
               <p>Berupa Chrome Extension untuk komputer dan laptop. Tidak ada software berat yang perlu diinstall — cukup tambahkan ke Chrome dan langsung pakai dengan lisensimu.</p>
             </div>
           </div>
+        </div>
+
+        <!-- Bahan promosi yang ikut terambil otomatis -->
+        <div class="auto-panel">
+          <div class="auto-head">
+            <span class="auto-badge">★ Fitur Paling Dicari Affiliate</span>
+            <h3>Sekali Scrape, Bukan Cuma Angka — <span class="hl">Semua Bahan Promosi Ikut Terambil</span></h3>
+            <p>Ini yang membuat tools ini berbeda. Dalam <strong>sekali scrape</strong>, bukan hanya data riset yang kamu dapatkan — <strong>link affiliate, video, gambar, sampai deskripsi produk ikut terambil otomatis</strong> dan tersimpan rapi di file CSV hasil scrape. Tidak perlu lagi buka produk satu per satu hanya untuk menyalin bahan promosi.</p>
+          </div>
+          <div class="auto-grid">
+            <div class="auto-card">
+              <div class="a-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
+              <div>
+                <h4>Link Affiliate Otomatis</h4>
+                <p>Link Universal (Affiliate) setiap produk langsung ikut terambil dalam sekali scrape. Kamu tidak perlu menyalin link satu per satu — tinggal pakai untuk promosi dan fokus mengejar komisi.</p>
+                <span class="auto-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Terambil Otomatis · Masuk CSV</span>
+              </div>
+            </div>
+            <div class="auto-card">
+              <div class="a-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 20 12 6 21 6 3"/></svg></div>
+              <div>
+                <h4>Video Affiliate Otomatis</h4>
+                <p>Link Video produk langsung ikut terambil bersama data risetnya. Bahan video promosi sudah ada di tangan — kamu bisa langsung lanjut menyiapkan konten, tanpa hunting video satu per satu.</p>
+                <span class="auto-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Terambil Otomatis · Masuk CSV</span>
+              </div>
+            </div>
+            <div class="auto-card">
+              <div class="a-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></svg></div>
+              <div>
+                <h4>Gambar Produk Otomatis</h4>
+                <p>Link Gambar 1–9 setiap produk langsung ikut terambil lengkap. Foto produk siap kamu pakai untuk konten dan materi promosi — tanpa unduh manual dan tanpa bolak-balik membuka halaman produk.</p>
+                <span class="auto-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Terambil Otomatis · Masuk CSV</span>
+              </div>
+            </div>
+            <div class="auto-card">
+              <div class="a-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg></div>
+              <div>
+                <h4>Deskripsi Otomatis</h4>
+                <p>Deskripsi Produk lengkap langsung ikut terambil apa adanya dalam file hasil scrape. Tinggal sesuaikan dengan gaya bahasamu — tanpa ketik ulang dari nol dan tanpa copy-paste berulang kali.</p>
+                <span class="auto-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Terambil Otomatis · Masuk CSV</span>
+              </div>
+            </div>
+          </div>
+          <p class="auto-foot"><strong>Satu kali scrape, semuanya lengkap:</strong> data riset untuk memilih produk terbaik, plus seluruh bahan promosi untuk langsung eksekusi. Riset selesai, bahan sudah di tangan — kamu tinggal promosi.</p>
         </div>
       </div>
     </section>
